@@ -1,3 +1,11 @@
-import { bsc, type AppKitNetwork } from "@reown/appkit/networks";
+import {
+  bsc,
+  mainnet,
+  solana,
+  type AppKitNetwork,
+} from "@reown/appkit/networks";
 
-export const networks = [bsc] as [AppKitNetwork, ...AppKitNetwork[]];
+export const networks = [bsc, mainnet, solana] as [
+  AppKitNetwork,
+  ...AppKitNetwork[]
+];

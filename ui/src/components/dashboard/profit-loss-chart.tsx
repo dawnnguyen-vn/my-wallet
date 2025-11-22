@@ -1,7 +1,21 @@
 import { useState } from "react";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import TimeRangeSelect from "./time-range-select";
 
 const data3Months = [
   { date: "Jun 24", value: 2400 },
@@ -47,47 +61,54 @@ export function ProfitLossChart() {
   };
 
   return (
-    <Card className="col-span-4">
-      <CardHeader className="flex flex-row items-center justify-between pb-8">
+    <Card className="col-span-4 max-md:py-4 max-md:gap-4">
+      <CardHeader className="flex flex-row items-center justify-between pb-8 max-md:px-4 max-md:pb-4">
         <div className="space-y-1">
-          <CardTitle className="text-base font-normal">Total Profit/Loss</CardTitle>
-          <CardDescription>Total for the last {timeRange === "3m" ? "3 months" : timeRange === "30d" ? "30 days" : "7 days"}</CardDescription>
+          <CardTitle className="text-base font-normal">
+            Total Profit/Loss
+          </CardTitle>
+          <CardDescription>
+            Total for the last{" "}
+            {timeRange === "3m"
+              ? "3 months"
+              : timeRange === "30d"
+              ? "30 days"
+              : "7 days"}
+          </CardDescription>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant={timeRange === "3m" ? "default" : "outline"}
-            size="sm"
-            onClick={() => handleTimeRangeChange("3m")}
-          >
-            Last 3 months
-          </Button>
-          <Button
-            variant={timeRange === "30d" ? "default" : "outline"}
-            size="sm"
-            onClick={() => handleTimeRangeChange("30d")}
-          >
-            Last 30 days
-          </Button>
-          <Button
-            variant={timeRange === "7d" ? "default" : "outline"}
-            size="sm"
-            onClick={() => handleTimeRangeChange("7d")}
-          >
-            Last 7 days
-          </Button>
-        </div>
+        <TimeRangeSelect
+          timeRange={timeRange}
+          handleTimeRangeChange={handleTimeRangeChange}
+        />
       </CardHeader>
-      <CardContent>
+      <CardContent className="max-md:px-0.5">
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <AreaChart
+              data={data}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
               <defs>
                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                  <stop
+                    offset="5%"
+                    stopColor="var(--primary)"
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="var(--primary)"
+                    stopOpacity={0}
+                  />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="date" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+              <XAxis
+                dataKey="date"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
               <YAxis
                 stroke="#888888"
                 fontSize={12}
@@ -100,7 +121,7 @@ export function ProfitLossChart() {
               <Area
                 type="monotone"
                 dataKey="value"
-                stroke="#8884d8"
+                stroke="var(--primary)"
                 fillOpacity={1}
                 fill="url(#colorValue)"
               />

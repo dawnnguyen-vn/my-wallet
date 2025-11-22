@@ -1,6 +1,7 @@
-import { OverviewCards } from "./overview-cards";
-import { ProfitLossChart } from "./profit-loss-chart";
-import { TokenList } from "./token-list";
+import AssetAllocation from "@/components/dashboard/asset-allocation";
+import OverviewCards from "@/components/dashboard/overview-cards";
+import ProfitLossChart from "@/components/dashboard/profit-loss-chart";
+import TokenList from "@/components/dashboard/token-list";
 
 export default function Dashboard() {
   return (
@@ -12,7 +13,14 @@ export default function Dashboard() {
       </div>
       <div className="space-y-4">
         <OverviewCards />
-        <ProfitLossChart />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+          <div className="md:col-span-1">
+            <AssetAllocation />
+          </div>
+          <div className="md:col-span-3">
+            <ProfitLossChart />
+          </div>
+        </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <div className="col-span-7">
             <TokenList />

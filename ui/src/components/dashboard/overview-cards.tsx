@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowUpRight, DollarSign } from "lucide-react";
 
-export function OverviewCards() {
+export default function OverviewCards() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card className="max-md:py-4 max-md:gap-4">

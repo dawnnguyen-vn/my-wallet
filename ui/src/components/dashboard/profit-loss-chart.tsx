@@ -15,7 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import TimeRangeSelect from "./time-range-select";
+import TimeRangeSelect from "@/components/dashboard/time-range-select";
 
 const data3Months = [
   { date: "Jun 24", value: 2400 },
@@ -49,7 +49,7 @@ const data7Days = [
   { date: "Sun", value: 5200 },
 ];
 
-export function ProfitLossChart() {
+export default function ProfitLossChart() {
   const [timeRange, setTimeRange] = useState("3m");
   const [data, setData] = useState(data3Months);
 

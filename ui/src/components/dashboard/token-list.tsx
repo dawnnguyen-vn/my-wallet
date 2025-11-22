@@ -44,17 +44,23 @@ const tokens = [
   },
 ];
 
-export function TokenList() {
+export default function TokenList() {
   return (
     <div className="rounded-md border overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[250px]">Token</TableHead>
-            <TableHead className="text-right hidden md:table-cell">Price</TableHead>
-            <TableHead className="text-right hidden md:table-cell">Balance</TableHead>
+            <TableHead className="text-right hidden md:table-cell">
+              Price
+            </TableHead>
+            <TableHead className="text-right hidden md:table-cell">
+              Balance
+            </TableHead>
             <TableHead className="text-right">Value</TableHead>
-            <TableHead className="text-right hidden lg:table-cell">Avg Cost (DCA)</TableHead>
+            <TableHead className="text-right hidden lg:table-cell">
+              Avg Cost (DCA)
+            </TableHead>
             <TableHead className="text-right">Profit/Loss</TableHead>
           </TableRow>
         </TableHeader>
@@ -69,15 +75,31 @@ export function TokenList() {
                   </Avatar>
                   <div className="flex flex-col">
                     <span>{token.name}</span>
-                    <span className="text-xs text-muted-foreground">{token.symbol}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {token.symbol}
+                    </span>
                   </div>
                 </div>
               </TableCell>
-              <TableCell className="text-right hidden md:table-cell">{token.price}</TableCell>
-              <TableCell className="text-right hidden md:table-cell">{token.balance} {token.symbol}</TableCell>
-              <TableCell className="text-right font-bold">{token.value}</TableCell>
-              <TableCell className="text-right text-muted-foreground hidden lg:table-cell">{token.avgCost}</TableCell>
-              <TableCell className={`text-right ${token.profitPercent.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+              <TableCell className="text-right hidden md:table-cell">
+                {token.price}
+              </TableCell>
+              <TableCell className="text-right hidden md:table-cell">
+                {token.balance} {token.symbol}
+              </TableCell>
+              <TableCell className="text-right font-bold">
+                {token.value}
+              </TableCell>
+              <TableCell className="text-right text-muted-foreground hidden lg:table-cell">
+                {token.avgCost}
+              </TableCell>
+              <TableCell
+                className={`text-right ${
+                  token.profitPercent.startsWith("+")
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
                 <div className="flex flex-col items-end">
                   <span>{token.profit}</span>
                   <span className="text-xs">{token.profitPercent}</span>

@@ -1,5 +1,5 @@
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,

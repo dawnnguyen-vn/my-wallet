@@ -3,8 +3,13 @@ import ConnectButton from "@/components/connect-button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import SideBar from "./side-bar";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import SideBar from "@/layout/side-bar";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function MainHeader() {
@@ -21,7 +26,7 @@ export default function MainHeader() {
           </SheetTrigger>
           <SheetContent side="left" className="p-0 w-64">
             <VisuallyHidden>
-                <SheetTitle>Navigation Menu</SheetTitle>
+              <SheetTitle>Navigation Menu</SheetTitle>
             </VisuallyHidden>
             <SideBar onClose={() => setOpen(false)} className="border-none" />
           </SheetContent>

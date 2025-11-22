@@ -1,7 +1,6 @@
-import MainHeader from "./main-header";
+import MainHeader from "@/layout/main-header";
 import Dashboard from "@/components/dashboard/dashboard";
-import SideBar from "./side-bar";
-import Test from "@/components/test";
+import SideBar from "@/layout/side-bar";
 
 export default function Main() {
   return (
@@ -10,8 +9,7 @@ export default function Main() {
       <div className="flex flex-col flex-1 h-full overflow-hidden">
         <MainHeader />
         <main className="flex-1 overflow-auto">
-          {/* <Dashboard /> */}
-          <Test />
+          <Dashboard />
         </main>
       </div>
     </div>

@@ -1,0 +1,12 @@
+.terraform/
+.terraform.lock.hcl
+tfplan*
+crash.log
+override.tf
+override.tf.json
+*.tfvars
+*.auto.tfvars
+terraform.tfstate
+terraform.tfstate.backup
+
+src/__pycache__/

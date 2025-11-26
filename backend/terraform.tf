@@ -87,7 +87,6 @@ resource "aws_api_gateway_stage" "api_gateway_stage" {
 # 2. Lambda Function
 # ---------------------------
 resource "aws_lambda_function" "lambda" {
-  depends_on    = [null_resource.docker_build_push]
   function_name = "${var.project}-lambda"
   role          = aws_iam_role.lambda_role.arn
   package_type  = "Image"
@@ -125,9 +124,61 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
+
 resource "aws_iam_role_policy_attachment" "lambda_basic" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_dynamodb_attach" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.lambda_dynamodb_policy.arn
+}
+
+resource "aws_iam_policy" "lambda_dynamodb_policy" {
+  name = "${var.project}-lambda-dynamodb-policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Query",
+          "dynamodb:Scan"
+        ]
+        Resource = [
+          aws_dynamodb_table.order_table.arn
+        ]
+      }
+    ]
+  })
+}
+
+
+# ---------------------------
+# 3. Dynamo DB
+# ---------------------------
+resource "aws_dynamodb_table" "order_table" {
+  name         = "${var.project}-order"
+  billing_mode = "PAY_PER_REQUEST"
+
+  hash_key  = "order_id"
+  range_key = "trade_date"
+
+  attribute {
+    name = "order_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "trade_date"
+    type = "S"
+  }
 }
 
 
@@ -136,6 +187,7 @@ resource "null_resource" "docker_build_push" {
     always_run = timestamp() # always rebuild on `terraform apply`
   }
 
+  # 1. Build + Push Image
   provisioner "local-exec" {
     command = <<EOT
 aws ecr get-login-password --region ${var.region} --profile ${var.aws_profile} \
@@ -146,4 +198,22 @@ docker tag my-wallet-lambda:latest ${aws_ecr_repository.ecr_repo.repository_url}
 docker push ${aws_ecr_repository.ecr_repo.repository_url}:latest
 EOT
   }
+
+  # 2. Update Lambda to use the latest image digest
+  provisioner "local-exec" {
+    command = <<EOT
+aws lambda update-function-code \
+  --region ${var.region} \
+  --profile ${var.aws_profile} \
+  --function-name ${aws_lambda_function.lambda.function_name} \
+  --image-uri ${aws_ecr_repository.ecr_repo.repository_url}:latest
+EOT
+  }
+
+  depends_on = [
+    aws_ecr_repository.ecr_repo,
+    aws_lambda_function.lambda
+  ]
 }
+
+

@@ -10,3 +10,4 @@ terraform.tfstate
 terraform.tfstate.backup
 
 src/__pycache__/
+volume

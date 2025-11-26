@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr-eng \
     && apt-get clean
 
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter /opt/extensions/lambda-adapter
+COPY ./.aws /root/.aws
 
 WORKDIR /var/task
 
@@ -16,5 +16,3 @@ RUN python -m pip install -r requirements.txt
 COPY src/ .
 
 ENV PYTHONPATH=/var/task
-
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
